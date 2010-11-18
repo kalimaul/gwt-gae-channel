@@ -20,6 +20,6 @@ import com.google.gwt.core.client.JavaScriptObject;
 
 /** Returned by calls to {@link Channel#open(SocketListener)}. */
 public class Socket extends JavaScriptObject {
-	protected Socket() {
-	}
+  protected Socket() {
+  }
 }

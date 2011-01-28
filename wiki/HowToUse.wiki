@@ -1,0 +1,27 @@
+#summary How to use this library in your GWT application.
+
+= Introduction =
+
+First of all, you should read and be familiar with how to use the App Engine Channel API ([http://code.google.com/appengine/docs/python/channel/ python] | [http://code.google.com/appengine/docs/java/channel/ java]) on the server-side.
+
+This library simply wraps the client-side JavaScript with GWT bindings to make it accessible in a GWT application, and it doesn't manage telling your client the client ID it should use. That part's up to you, and is described in the documentation for the Channel API.
+
+= A Short Sample =
+
+The following is a simple example of how to open a channel and receive updates when the channel receives a message.
+
+{{{
+Channel channel = ChannelFactory.createChannel(channelId);
+channel.open(new SocketListener() {
+  @Override
+  public void onOpen() {
+    Window.alert("Channel opened!");
+  }
+  @Override
+  public void onMessage(String message) {
+    Window.alert("Received: " + message);
+  }
+});
+}}}
+
+Whenever the server sends a message to your client ID, the `onMessage()` method will get called with the message that was sent.

@@ -25,7 +25,6 @@ ChannelFactory.createChannel(channelId, new ChannelCreatedCallback() {
     }
   }
 });
-);
 }}}
 
 Whenever the server sends a message to your client ID, the `onMessage()` method will get called with the message that was sent.

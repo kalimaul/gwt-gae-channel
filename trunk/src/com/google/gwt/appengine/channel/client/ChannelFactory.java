@@ -61,7 +61,7 @@ public class ChannelFactory {
   }-*/;
 
   private static final native Channel createChannelImpl(String clientId) /*-{
-    $wnd.__gwt_Channel = new $wnd.goog.appengine.Channel(clientId);
+    return new $wnd.goog.appengine.Channel(clientId);
   }-*/;
 
   public interface ChannelCreatedCallback {

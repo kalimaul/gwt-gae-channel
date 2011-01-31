@@ -26,7 +26,16 @@ public class ChannelFactory {
   private static final String CHANNEL_SRC = "/_ah/channel/jsapi";
   private static Channel channel;
 
-  public static Channel createChannel(final String channelId) {
+  /**
+   * Creates a {@link Channel} with the given client ID, passing it to the given
+   * {@link ChannelCreatedCallback}.
+   *
+   * <p>
+   * If a Channel has already been created, this will immediately be passed to
+   * the callback, so only one Channel will ever be created by this method.
+   * </p>
+   */
+  public static void createChannel(final String clientId, final ChannelCreatedCallback callback) {
     if (channel == null) {
       ScriptElement script = Document.get().createScriptElement();
       script.setSrc(CHANNEL_SRC);
@@ -36,22 +45,26 @@ public class ChannelFactory {
         @Override
         public void run() {
           if (scriptLoaded()) {
-            channel = createChannelImpl(channelId);
+            channel = createChannelImpl(clientId);
+            callback.onChannelCreated(channel);
             this.cancel();
           }
         }
       }.scheduleRepeating(100);
+    } else {
+      callback.onChannelCreated(channel);
     }
-    return channel;
   }
 
   private static native boolean scriptLoaded() /*-{
-    return (typeof $wnd.goog != 'undefined')
-        && (typeof $wnd.goog.appengine != 'undefined')
-        && (typeof $wnd.goog.appengine.Channel != 'undefined');
+    return !!$wnd.goog && !!$wnd.goog.appengine && !!$wnd.goog.appengine.Channel;
   }-*/;
 
-  private static final native Channel createChannelImpl(String channelId) /*-{
-    $wnd.__gwt_Channel = new $wnd.goog.appengine.Channel(channelId);
+  private static final native Channel createChannelImpl(String clientId) /*-{
+    $wnd.__gwt_Channel = new $wnd.goog.appengine.Channel(clientId);
   }-*/;
+
+  public interface ChannelCreatedCallback {
+    public void onChannelCreated(Channel channel);
+  }
 }

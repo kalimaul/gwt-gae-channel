@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Google Inc.
+ * Copyright (C) 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,6 +33,15 @@ public class Channel extends JavaScriptObject {
       listener.
       @com.google.gwt.appengine.channel.client.SocketListener::onMessage(Ljava/lang/String;)
       (event.data);
+    };
+    socket.onerror = function(error) {
+      listener.
+      @com.google.gwt.appengine.channel.client.SocketListener::onError(Lcom/google/gwt/appengine/channel/client/SocketError;)
+      (event.data);
+    };
+    socket.onclose = function(event) {
+      listener.
+      @com.google.gwt.appengine.channel.client.SocketListener::onClose()();
     };
     return socket;
   }-*/;

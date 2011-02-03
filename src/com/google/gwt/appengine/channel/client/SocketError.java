@@ -18,16 +18,24 @@ package com.google.gwt.appengine.channel.client;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
-/** Returned by calls to {@link Channel#open(SocketListener)}. */
-public class Socket extends JavaScriptObject {
-  protected Socket() {
+/**
+ * An error encountered by a {@link Socket}, passed to the
+ * {@link SocketListener}.
+ */
+public final class SocketError extends JavaScriptObject {
+
+  protected SocketError() {
   }
 
-  /**
-   * Closes this socket to incoming messages from the server. The socket cannot
-   * be used again after calling close; the server must create a new socket.
-   */
-  public final native void close() /*-{
-    this.close();
+  /** Returns a short description of the error encountered. */
+  public final native String getDescription() /*-{
+    return this.description;
   }-*/;
+
+  /** Returns the HTTP error code corresponding to the error encountered. */
+  public final native int getCode() /*-{
+    return this.code;
+  }-*/;
+
+
 }

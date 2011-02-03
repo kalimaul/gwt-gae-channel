@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Google Inc.
+ * Copyright (C) 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,11 +16,25 @@
 
 package com.google.gwt.appengine.channel.client;
 
-/** Listener to receive messages from the server. */
+/**
+ * Listener to receive messages from the server.
+ *
+ * <p>
+ * For more information about the events handled by this listener, see the
+ * Channel API JavaScript Reference: {@link
+ * "http://code.google.com/appengine/docs/java/channel/javascript.html"}.
+ * </p>
+ */
 public interface SocketListener {
-	/** Called when the channel is opened. */
-	void onOpen();
+  /** Called when the channel is opened. */
+  void onOpen();
 
-	/** Called when the channel receives a message from the server. */
-	void onMessage(String message);
+  /** Called when the channel receives a message from the server. */
+  void onMessage(String message);
+
+  /** Called when the channel receives an error. */
+  void onError(SocketError error);
+
+  /** Called when the channel is closed. */
+  void onClose();
 }

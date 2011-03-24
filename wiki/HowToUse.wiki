@@ -12,7 +12,7 @@ This library simply wraps the client-side JavaScript with GWT bindings to make i
 The following is a simple example of how to open a channel and receive updates when the channel receives a message.
 
 {{{
-ChannelFactory.createChannel(channelId, new ChannelCreatedCallback() {
+ChannelFactory.createChannel(token, new ChannelCreatedCallback() {
   @Override
   public void onChannelCreated(Channel channel) {
     channel.open(new SocketListener() {

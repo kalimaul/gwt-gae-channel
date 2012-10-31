@@ -18,7 +18,7 @@
   </target>
   
   <target name="compile" depends="init">
-    <javac includeantruntime="false" 
+    <javac includeantruntime="false"
            destdir="${build}"
            srcdir="${src}"
            classpathref="classpath"
@@ -29,7 +29,7 @@
     <!-- Create the distribution directory -->
     <mkdir dir="${dist}"/>
     
-    <jar destfile="${dist}/${ant.project.name}-${project.version}.jar" basedir="${src}">
+    <jar destfile="${dist}/${ant.project.name}-${project.version}.jar">
       <!-- GWT libraries need sources as well as classes -->
       <fileset dir="${src}"/>
       <fileset dir="${build}"/>

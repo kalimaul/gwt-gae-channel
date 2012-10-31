@@ -17,24 +17,28 @@
 package com.google.gwt.appengine.channel.client;
 
 /**
- * Listener to receive messages from the server.
- *
- * <p>
- * For more information about the events handled by this listener, see the
- * Channel API JavaScript Reference: {@link
- * "http://code.google.com/appengine/docs/java/channel/javascript.html"}.
- * </p>
+ * Listens for events on a {@link Socket}.
  */
 public interface SocketListener {
-  /** Called when the channel is opened. */
-  void onOpen();
 
-  /** Called when the channel receives a message from the server. */
+  /**
+   * Called when the socket is ready to receive messages.
+   */
+  void onOpen();
+  
+  /**
+   * Called when the socket receives a message.
+   */
   void onMessage(String message);
 
-  /** Called when the channel receives an error. */
-  void onError(SocketError error);
+  /**
+   * Called when an error occurs on the socket.
+   */
+  void onError(ChannelError error);
 
-  /** Called when the channel is closed. */
+  /**
+   * Called when the socket is closed. When the socket is closed, it cannot be reopened.
+   */
   void onClose();
+  
 }

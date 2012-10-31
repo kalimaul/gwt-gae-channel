@@ -16,55 +16,24 @@
 
 package com.google.gwt.appengine.channel.client;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.ScriptElement;
-import com.google.gwt.user.client.Timer;
+import com.google.inject.ImplementedBy;
 
-/** Manages creating {@link Channel}s to receive messages from the server. */
-public class ChannelFactory {
-
-  private static final String CHANNEL_SRC = "/_ah/channel/jsapi";
-  private static Channel channel;
-
+/**
+ * Creates new {@link Channel}s.
+ * 
+ * The App Engine Channel API script must be installed before the GWT application, per the
+ * instructions at http://code.google.com/appengine/docs/java/channel/javascript.html
+ */
+@ImplementedBy(ChannelFactoryImpl.class)
+public interface ChannelFactory {
+  
   /**
-   * Creates a {@link Channel} with the given client ID, passing it to the given
-   * {@link ChannelCreatedCallback}.
-   *
-   * <p>
-   * If a Channel has already been created, this will immediately be passed to
-   * the callback, so only one Channel will ever be created by this method.
-   * </p>
+   * Creates a new {@code Channel} object with the given token. The token must be a valid Channel
+   * API token created by App Engine's channel service. 
+   * 
+   * @param token
+   * @return a new {@code Channel}
    */
-  public static void createChannel(final String clientId, final ChannelCreatedCallback callback) {
-    if (channel == null) {
-      ScriptElement script = Document.get().createScriptElement();
-      script.setSrc(CHANNEL_SRC);
-      Document.get().getElementsByTagName("head").getItem(0).appendChild(script);
-
-      new Timer() {
-        @Override
-        public void run() {
-          if (scriptLoaded()) {
-            channel = createChannelImpl(clientId);
-            callback.onChannelCreated(channel);
-            this.cancel();
-          }
-        }
-      }.scheduleRepeating(100);
-    } else {
-      callback.onChannelCreated(channel);
-    }
-  }
-
-  private static native boolean scriptLoaded() /*-{
-    return !!$wnd.goog && !!$wnd.goog.appengine && !!$wnd.goog.appengine.Channel;
-  }-*/;
-
-  private static final native Channel createChannelImpl(String clientId) /*-{
-    return new $wnd.goog.appengine.Channel(clientId);
-  }-*/;
-
-  public interface ChannelCreatedCallback {
-    public void onChannelCreated(Channel channel);
-  }
+  Channel createChannel(String token);
+  
 }

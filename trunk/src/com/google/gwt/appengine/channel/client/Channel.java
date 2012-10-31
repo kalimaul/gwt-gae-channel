@@ -16,33 +16,16 @@
 
 package com.google.gwt.appengine.channel.client;
 
-import com.google.gwt.core.client.JavaScriptObject;
+/**
+ * AppEngine Channel API Channel.
+ * 
+ * Channels are created by the {@link ChannelFactory}.
+ */
+public interface Channel {
 
-/** Represents a channel to receive messages from the server. */
-public class Channel extends JavaScriptObject {
-  protected Channel() {
-  }
+  /**
+   * Open a socket on this channel and attaches the given listener.
+   */
+  public Socket open(SocketListener listener);
 
-  /** Opens the channel and attaches the given listener. */
-  public final native Socket open(SocketListener listener) /*-{
-    var socket = this.open();
-    socket.onopen = function(event) {
-      listener.@com.google.gwt.appengine.channel.client.SocketListener::onOpen()();
-    };
-    socket.onmessage = function(event) {
-      listener.
-      @com.google.gwt.appengine.channel.client.SocketListener::onMessage(Ljava/lang/String;)
-      (event.data);
-    };
-    socket.onerror = function(error) {
-      listener.
-      @com.google.gwt.appengine.channel.client.SocketListener::onError(Lcom/google/gwt/appengine/channel/client/SocketError;)
-      (error);
-    };
-    socket.onclose = function(event) {
-      listener.
-      @com.google.gwt.appengine.channel.client.SocketListener::onClose()();
-    };
-    return socket;
-  }-*/;
 }

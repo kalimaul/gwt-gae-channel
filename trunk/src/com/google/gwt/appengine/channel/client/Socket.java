@@ -16,18 +16,15 @@
 
 package com.google.gwt.appengine.channel.client;
 
-import com.google.gwt.core.client.JavaScriptObject;
-
-/** Returned by calls to {@link Channel#open(SocketListener)}. */
-public class Socket extends JavaScriptObject {
-  protected Socket() {
-  }
+/**
+ * App Engine Channel API socket object.
+ */
+public interface Socket {
 
   /**
-   * Closes this socket to incoming messages from the server. The socket cannot
-   * be used again after calling close; the server must create a new socket.
+   * Close the socket. The socket cannot be used again after calling close; the server must create
+   * a new socket.
    */
-  public final native void close() /*-{
-    this.close();
-  }-*/;
+  void close();
+  
 }

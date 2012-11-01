@@ -18,13 +18,16 @@ package com.google.gwt.appengine.channel.client;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
+/**
+ *  Implementation of {@link Socket}.
+ */
 public class SocketImpl extends JavaScriptObject implements Socket {
   
   protected SocketImpl() {
   }
 
   @Override
-  public native final void close() /*-{
+  public final native void close() /*-{
     this.close();
   }-*/;
 
